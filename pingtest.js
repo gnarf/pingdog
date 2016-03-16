@@ -24,7 +24,7 @@ function runPing(ip) {
 		// 10 packets transmitted, 10 received, 0% packet loss, time 9000ms
 		// rtt min/avg/max/mdev = 0.199/0.210/0.252/0.023 ms
 		const stats = output.match(/(\d+) packets transmitted, (\d+) (?:packets )?received, ([\d.]+)% packet loss/);
-		const rtt = output.match(/(round-trip|rtt) min\/avg\/max\/stddev = ([\d.]+)\/([\d.]+)\/([\d.]+)\/([\d.]+) ms/);
+		const rtt = output.match(/(?:round-trip|rtt) min\/avg\/max\/(?:std|m)dev = ([\d.]+)\/([\d.]+)\/([\d.]+)\/([\d.]+) ms/);
 		if (stats) {
 			debug('stats', stats[0]);
 			metrics.increment('packetsSent', +stats[1], tags);
