@@ -1,6 +1,6 @@
 'use strict';
 
-// Usage: DATADOG_API_KEY=apikey DATADOG_APP_KEY=appkey DEBUG=* node pingtest.js
+// Usage: DATADOG_API_KEY=apikey DATADOG_APP_KEY=appkey DEBUG=* node pingtest.js host1 host2 host3
 
 var metrics = require('datadog-metrics');
 var os = require('os');
@@ -52,6 +52,4 @@ function runPing(ip) {
 	});
 }
 
-// TODO: read these hosts from command line?
-['8.8.8.8', '8.8.4.4', '10.0.0.1', 'a.rootservers.net', 'google.com', 'cloud.gnarf.net'].forEach(runPing);
-
+process.argv.slice(2).forEach(runPing);
