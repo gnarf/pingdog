@@ -45,7 +45,7 @@ function runPing(ip) {
 			json: {
 				title: 'Ping for ' + ip,
 				text: '%%%\n```\n' + output + '\n```\n',
-				tags: tags.concat(['ping']),
+				tags: tags.concat(['ping', 'host:' + os.hostname()]),
 			},
 		}, (err, res) => debug('sent event'));
 		runPing(ip);
