@@ -53,5 +53,5 @@ function runPing(ip) {
 }
 
 // TODO: read these hosts from command line?
-['8.8.8.8', '8.8.4.4', '10.0.0.1', 'a.rootservers.net'].forEach(runPing);
+['8.8.8.8', '8.8.4.4', '10.0.0.1', 'a.rootservers.net', 'google.com', 'cloud.gnarf.net'].forEach(runPing);
 
