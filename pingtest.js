@@ -13,7 +13,7 @@ metrics.init({ host: os.hostname(), prefix: 'ping.', flushIntervalSeconds: 60 })
 
 function runPing(ip) {
 	const tags = ['ping_ip:' + ip];
-	const ping = spawn('ping', ['-c10', ip]);
+	const ping = spawn('ping', ['-n', '-c10', ip]);
 	const debug = Debug('ping:' + ip);
 	debug('starting ping');
 	let output = '';
@@ -21,8 +21,10 @@ function runPing(ip) {
 		output += data;
 	});
 	ping.on('close', code => {
-		const stats = output.match(/(\d+) packets transmitted, (\d+) packets received, ([\d.]+)% packet loss/);
-		const rtt = output.match(/round-trip min\/avg\/max\/stddev = ([\d.]+)\/([\d.]+)\/([\d.]+)\/([\d.]+) ms/);
+		// 10 packets transmitted, 10 received, 0% packet loss, time 9000ms
+		// rtt min/avg/max/mdev = 0.199/0.210/0.252/0.023 ms
+		const stats = output.match(/(\d+) packets transmitted, (\d+) (?:packets )?received, ([\d.]+)% packet loss/);
+		const rtt = output.match(/(round-trip|rtt) min\/avg\/max\/stddev = ([\d.]+)\/([\d.]+)\/([\d.]+)\/([\d.]+) ms/);
 		if (stats) {
 			debug('stats', stats[0]);
 			metrics.increment('packetsSent', +stats[1], tags);
